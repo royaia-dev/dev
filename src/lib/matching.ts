@@ -35,7 +35,9 @@ const DEFAULT_QUANTITY: Record<Capability["unit"], number> = {
 
 function extractQuantity(text: string, capability: Capability): number | null {
   for (const word of capability.unitWords) {
-    const pattern = new RegExp(`([\\d,]+(?:\\.\\d+)?)\\s*${escape(word)}\\b`, "i");
+    // \b only terminates a match that ends in a word character ("m²" does not).
+    const boundary = /\w$/.test(word) ? "\\b" : "";
+    const pattern = new RegExp(`([\\d,]+(?:\\.\\d+)?)\\s*${escape(word)}${boundary}`, "i");
     const match = text.match(pattern);
     if (match) return Number(match[1].replace(/,/g, ""));
   }
