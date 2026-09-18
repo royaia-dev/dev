@@ -24,16 +24,6 @@ const CONSTRAINT_RULES: { label: string; keywords: string[] }[] = [
   { label: "Site induction required", keywords: ["warehouse", "site", "plant", "facility", "dc"] },
 ];
 
-/** Quantity cues mapped to the capability unit they qualify. */
-const QUANTITY_CUES: { unitWords: string[]; capabilityDomains: Capability["domain"][] }[] = [
-  { unitWords: ["panel", "panels", "module", "modules"], capabilityDomains: ["inspection"] },
-  { unitWords: ["pallet", "pallets", "carton", "cartons", "movement", "movements", "stillage"], capabilityDomains: ["material"] },
-  { unitWords: ["m2", "m²", "sqm", "square metre", "square meter", "square metres"], capabilityDomains: ["cleaning"] },
-  { unitWords: ["asset", "assets", "board", "boards", "switchboard", "switchboards"], capabilityDomains: ["inspection"] },
-  { unitWords: ["hour", "hours", "hr", "hrs"], capabilityDomains: ["material", "maintenance", "survey"] },
-  { unitWords: ["patrol", "patrols", "night", "nights"], capabilityDomains: ["security"] },
-];
-
 const DEFAULT_QUANTITY: Record<Capability["unit"], number> = {
   panel: 200,
   movement: 500,
@@ -44,12 +34,8 @@ const DEFAULT_QUANTITY: Record<Capability["unit"], number> = {
 };
 
 function extractQuantity(text: string, capability: Capability): number | null {
-  const cue = QUANTITY_CUES.find(
-    (c) => c.capabilityDomains.includes(capability.domain) && c.unitWords.some((w) => text.includes(w)),
-  );
-  if (!cue) return null;
-  for (const word of cue.unitWords) {
-    const pattern = new RegExp(`([\\d,]+(?:\\.\\d+)?)\\s*(?:${escape(word)})`, "i");
+  for (const word of capability.unitWords) {
+    const pattern = new RegExp(`([\\d,]+(?:\\.\\d+)?)\\s*${escape(word)}\\b`, "i");
     const match = text.match(pattern);
     if (match) return Number(match[1].replace(/,/g, ""));
   }
@@ -83,18 +69,28 @@ export function parseRequest(text: string): ParsedJob {
 
   requirements.sort((a, b) => b.confidence - a.confidence);
 
+  // A request rarely needs two capabilities from the same domain; keeping only the
+  // strongest match per domain stops near-synonyms inflating the requirement list.
+  const claimedDomains = new Set<Capability["domain"]>();
+  const deduped = requirements.filter((requirement) => {
+    const { domain } = CAPABILITY_BY_ID[requirement.capabilityId];
+    if (claimedDomains.has(domain)) return false;
+    claimedDomains.add(domain);
+    return true;
+  });
+
   const constraints = CONSTRAINT_RULES.filter((r) => r.keywords.some((k) => lower.includes(k))).map(
     (r) => r.label,
   );
 
-  const summary = requirements.length
-    ? requirements
+  const summary = deduped.length
+    ? deduped
         .slice(0, 3)
         .map((r) => CAPABILITY_BY_ID[r.capabilityId].name.toLowerCase())
         .join(", ")
     : "no recognised capability";
 
-  return { requirements: requirements.slice(0, 3), constraints, summary };
+  return { requirements: deduped.slice(0, 3), constraints, summary };
 }
 
 export type Offer = {

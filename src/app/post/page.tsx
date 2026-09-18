@@ -18,10 +18,10 @@ const EXAMPLES = [
   },
   {
     label: "Overnight pallet movement",
-    text: "Move 5,000 cartons from inbound dock to racking overnight during the shutdown window at our DC.",
+    text: "Move 1,200 pallets from inbound dock to racking overnight during the shutdown window at our DC.",
     site: "Eastern Creek, NSW",
-    deadline: 24,
-    budget: 9000,
+    deadline: 48,
+    budget: 3000,
   },
   {
     label: "Switchboard thermography",
@@ -34,7 +34,7 @@ const EXAMPLES = [
     label: "Floor cleaning",
     text: "Nightly scrub of 6,000 m2 of warehouse floor, food-grade hygiene requirements.",
     site: "Botany, NSW",
-    deadline: 36,
+    deadline: 48,
     budget: 900,
   },
 ];

@@ -59,7 +59,11 @@ export default function JobsPage() {
                     <div className="text-right">
                       <Badge tone={STATUS_TONE[job.status]}>{STATUS_LABEL[job.status]}</Badge>
                       <div className="mt-2 text-sm text-slate-300">
-                        {accepted ? money(accepted.price) : `from ${money(Math.min(...job.offers.map((o) => o.price)))}`}
+                        {accepted
+                          ? money(accepted.price)
+                          : job.offers.length
+                            ? `from ${money(Math.min(...job.offers.map((o) => o.price)))}`
+                            : "no supply"}
                       </div>
                     </div>
                   </div>

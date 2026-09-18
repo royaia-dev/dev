@@ -10,6 +10,10 @@ import { nowLabel, useStore, type EvidenceItem, type Job } from "@/lib/store";
 
 const PLATFORM_FEE = 0.1;
 
+const toCents = (value: number) => Math.round(value * 100) / 100;
+const feeOn = (price: number) => toCents(price * PLATFORM_FEE);
+const withFee = (price: number) => toCents(price * (1 + PLATFORM_FEE));
+
 function evidenceFor(job: Job): EvidenceItem[] {
   const items: EvidenceItem[] = [
     {
@@ -74,14 +78,14 @@ export default function JobDetailPage() {
         ...current,
         acceptedOfferId: offerId,
         status: "awarded",
-        escrowHeld: Math.round(offer.price * (1 + PLATFORM_FEE)),
+        escrowHeld: withFee(offer.price),
         timeline: [
           ...current.timeline,
           { at: nowLabel(), actor: "customer", message: `Offer accepted from ${provider.name}` },
           {
             at: nowLabel(),
             actor: "platform",
-            message: `${money(Math.round(offer.price * (1 + PLATFORM_FEE)))} held in escrow (job ${money(offer.price)} + ${PLATFORM_FEE * 100}% platform fee)`,
+            message: `${money(withFee(offer.price))} held in escrow (job ${money(offer.price)} + ${PLATFORM_FEE * 100}% platform fee)`,
           },
         ],
       };
@@ -125,7 +129,7 @@ export default function JobDetailPage() {
           {
             at: nowLabel(),
             actor: "platform",
-            message: `${money(offer.price)} released to ${provider.name}; ${money(Math.round(offer.price * PLATFORM_FEE))} retained as platform fee`,
+            message: `${money(offer.price)} released to ${provider.name}; ${money(feeOn(offer.price))} retained as platform fee`,
           },
           {
             at: nowLabel(),
@@ -258,7 +262,7 @@ export default function JobDetailPage() {
                           onClick={() => award(offer.id)}
                           className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-black transition hover:bg-amber-400"
                         >
-                          Accept offer · hold {money(Math.round(offer.price * (1 + PLATFORM_FEE)))} in escrow
+                          Accept offer · hold {money(withFee(offer.price))} in escrow
                         </button>
                       )}
                     </div>
@@ -346,7 +350,7 @@ export default function JobDetailPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Platform revenue</span>
-                    <span className="text-amber-300">{money(Math.round(accepted.price * PLATFORM_FEE))}</span>
+                    <span className="text-amber-300">{money(feeOn(accepted.price))}</span>
                   </div>
                 </div>
               ) : null}

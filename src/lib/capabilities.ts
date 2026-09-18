@@ -10,6 +10,8 @@ export type Capability = {
   description: string;
   /** Terms used by the intake parser to detect this capability in free text. */
   keywords: string[];
+  /** Terms that qualify a number as a quantity of this capability's unit. */
+  unitWords: string[];
   /** Indicative market rate per unit, in AUD. */
   indicativeRate: number;
 };
@@ -22,7 +24,8 @@ export const CAPABILITIES: Capability[] = [
     unit: "panel",
     description:
       "Aerial or ground thermal imaging of photovoltaic arrays with fault classification and report generation.",
-    keywords: ["solar", "panel", "pv", "thermal", "hotspot", "array"],
+    keywords: ["solar", "photovoltaic", "pv array", "solar panel", "hotspot"],
+    unitWords: ["panel", "panels", "module", "modules"],
     indicativeRate: 0.8,
   },
   {
@@ -31,7 +34,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "inspection",
     unit: "asset",
     description: "High-resolution visual capture of roof, gutter and facade condition with defect markup.",
-    keywords: ["roof", "gutter", "facade", "damage", "storm"],
+    keywords: ["roof inspection", "gutter", "facade", "storm damage", "roof condition"],
+    unitWords: ["roof", "roofs", "building", "buildings"],
     indicativeRate: 240,
   },
   {
@@ -41,6 +45,7 @@ export const CAPABILITIES: Capability[] = [
     unit: "asset",
     description: "Thermal survey of switchboards, transformers and distribution assets to AS/NZS practice.",
     keywords: ["switchboard", "electrical", "transformer", "thermography", "thermal scan"],
+    unitWords: ["switchboard", "switchboards", "board", "boards", "asset", "assets"],
     indicativeRate: 65,
   },
   {
@@ -49,7 +54,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "survey",
     unit: "hour",
     description: "RPAS photogrammetry producing orthomosaic, point cloud and volumetric measurement.",
-    keywords: ["survey", "drone", "aerial", "stockpile", "volume", "photogrammetry", "site"],
+    keywords: ["survey", "stockpile", "photogrammetry", "orthomosaic", "volumetric"],
+    unitWords: ["hour", "hours", "hr", "hrs"],
     indicativeRate: 320,
   },
   {
@@ -58,7 +64,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "material",
     unit: "movement",
     description: "Autonomous mobile robots moving pallets, cages and stillages within a facility.",
-    keywords: ["pallet", "material", "move", "transport", "carton", "warehouse", "forklift", "stillage"],
+    keywords: ["pallet", "carton", "stillage", "material movement", "move ", "transport", "forklift"],
+    unitWords: ["pallet", "pallets", "carton", "cartons", "movement", "movements", "stillage", "stillages"],
     indicativeRate: 1.6,
   },
   {
@@ -67,7 +74,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "material",
     unit: "hour",
     description: "Autonomous scanning of rack locations for stock counts and location accuracy reporting.",
-    keywords: ["stock", "inventory", "count", "cycle count", "scan", "rack"],
+    keywords: ["inventory", "stocktake", "stock count", "cycle count", "count stock"],
+    unitWords: ["hour", "hours", "hr", "hrs", "shift", "shifts"],
     indicativeRate: 95,
   },
   {
@@ -76,7 +84,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "maintenance",
     unit: "hour",
     description: "Robotic load/unload of CNC or press cells including part presentation and quality gate.",
-    keywords: ["machine tending", "cnc", "load", "press", "cell", "tending"],
+    keywords: ["machine tending", "cnc", "press brake", "machining cell", "tending"],
+    unitWords: ["hour", "hours", "hr", "hrs", "shift", "shifts"],
     indicativeRate: 78,
   },
   {
@@ -85,7 +94,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "cleaning",
     unit: "sqm",
     description: "Autonomous scrubbing and sweeping of warehouse, retail and production floors.",
-    keywords: ["floor", "clean", "scrub", "sweep", "hygiene"],
+    keywords: ["floor", "scrub", "sweep", "hygiene", "mop"],
+    unitWords: ["m2", "m²", "sqm", "square metre", "square metres", "square meter", "square meters"],
     indicativeRate: 0.06,
   },
   {
@@ -94,7 +104,8 @@ export const CAPABILITIES: Capability[] = [
     domain: "cleaning",
     unit: "sqm",
     description: "High-pressure cleaning of hardstand, driveways, loading docks and external surfaces.",
-    keywords: ["pressure wash", "pressure-wash", "driveway", "hardstand", "washdown", "concrete"],
+    keywords: ["pressure wash", "pressure-wash", "driveway", "hardstand", "washdown"],
+    unitWords: ["m2", "m²", "sqm", "square metre", "square metres", "square meter", "square meters"],
     indicativeRate: 0.9,
   },
   {
@@ -104,6 +115,7 @@ export const CAPABILITIES: Capability[] = [
     unit: "patrol",
     description: "Scheduled perimeter and internal patrols with anomaly detection and incident escalation.",
     keywords: ["security", "patrol", "perimeter", "guard", "surveillance"],
+    unitWords: ["patrol", "patrols", "round", "rounds"],
     indicativeRate: 48,
   },
 ];
