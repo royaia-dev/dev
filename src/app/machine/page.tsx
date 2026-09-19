@@ -123,9 +123,9 @@ export default function MachineExchangePage() {
       <Card>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div className="text-xs uppercase tracking-wider text-slate-500">Originating asset</div>
-            <div className="mt-1 text-sm font-semibold text-slate-100">AMR-1180 · fleet controller</div>
-            <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-slate-400">
+            <div className="text-xs uppercase tracking-wider text-muted">Originating asset</div>
+            <div className="mt-1 text-sm font-semibold text-ink">AMR-1180 · fleet controller</div>
+            <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted">
               Accepted an overnight job to move {TOTAL_UNITS.toLocaleString()} cartons at {money(CUSTOMER_RATE)}{" "}
               per movement. Internal planner computes it can complete {OWN_CAPACITY.toLocaleString()} within the
               window. Rather than rejecting the job, it lists the shortfall on the exchange.
@@ -145,7 +145,7 @@ export default function MachineExchangePage() {
           <button
             type="button"
             onClick={publish}
-            className="mt-5 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-amber-400"
+            className="mt-5 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand"
           >
             Publish residual capacity to the exchange
           </button>
@@ -155,14 +155,14 @@ export default function MachineExchangePage() {
       {phase !== "idle" ? (
         <Card>
           <div className="flex items-center justify-between">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted">
               Incoming machine bids ({visibleBids.length}/{BIDS.length})
             </div>
             {visibleBids.length === BIDS.length && phase === "bidding" ? (
               <button
                 type="button"
                 onClick={() => setPhase("awarded")}
-                className="rounded-lg bg-violet-500 px-3 py-1.5 text-xs font-semibold text-black transition hover:bg-violet-400"
+                className="rounded-lg bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-violet-700"
               >
                 Run owner policy and award
               </button>
@@ -177,17 +177,17 @@ export default function MachineExchangePage() {
                 <div
                   key={bid.id}
                   className={`rounded-lg border p-3 ${
-                    awarded ? "border-emerald-500/40 bg-emerald-500/5" : "border-white/10 bg-black/20"
+                    awarded ? "border-emerald-600/30 bg-emerald-50" : "border-line bg-canvas"
                   } ${rejected ? "opacity-45" : ""}`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <div className="text-sm text-slate-100">{bid.asset}</div>
-                      <div className="text-xs text-slate-500">{bid.owner}</div>
+                      <div className="text-sm text-ink">{bid.asset}</div>
+                      <div className="text-xs text-muted">{bid.owner}</div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
                       <span>{bid.units.toLocaleString()} units offered</span>
-                      <span className="text-slate-200">${bid.ratePerUnit.toFixed(2)}/unit</span>
+                      <span className="text-ink">${bid.ratePerUnit.toFixed(2)}/unit</span>
                       <span>battery {Math.round(bid.battery * 100)}%</span>
                       <span>{bid.distanceKm} km</span>
                       <span>rel. {(bid.reliability * 100).toFixed(1)}%</span>
@@ -197,16 +197,16 @@ export default function MachineExchangePage() {
                   {phase === "awarded" ? (
                     <div className="mt-2 text-xs">
                       {awarded ? (
-                        <span className="text-emerald-300">
+                        <span className="text-emerald-700">
                           Awarded {allocation.find((a) => a.bid.id === bid.id)!.units.toLocaleString()} units ·{" "}
                           {money(allocation.find((a) => a.bid.id === bid.id)!.cost)}
                         </span>
                       ) : bid.reliability < 0.96 ? (
-                        <span className="text-rose-300">Rejected: below owner reliability floor</span>
+                        <span className="text-rose-600">Rejected: below owner reliability floor</span>
                       ) : bid.battery < 0.5 && bid.distanceKm > 0 ? (
-                        <span className="text-rose-300">Rejected: insufficient battery for travel leg</span>
+                        <span className="text-rose-600">Rejected: insufficient battery for travel leg</span>
                       ) : (
-                        <span className="text-slate-500">Not required: residual already covered at lower cost</span>
+                        <span className="text-muted">Not required: residual already covered at lower cost</span>
                       )}
                     </div>
                   ) : null}
@@ -219,14 +219,14 @@ export default function MachineExchangePage() {
 
       {phase === "awarded" ? (
         <Card>
-          <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Settlement</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted">Settlement</div>
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Stat label="Residual revenue" value={money(residualRevenue)} hint={`${RESIDUAL.toLocaleString()} movements`} />
             <Stat label="Subcontract cost" value={money(subcontractCost)} />
             <Stat label="Margin retained" value={money(residualRevenue - subcontractCost)} hint="by originating asset" />
             <Stat label="Unfilled" value={`${unfilled.toLocaleString()} units`} hint={unfilled ? "escalated to human" : "job fully covered"} />
           </div>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-400">
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
             Everything above is a simulation. To run this for real the exchange needs machine identity,
             signed capability attestations, per-machine reputation, insurer-accepted liability allocation and
             manufacturer APIs that expose bid/accept. None of that is a prerequisite for Stage 1 revenue, which

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "@/components/Logo";
 
 const LINKS = [
   { href: "/", label: "Overview" },
@@ -16,15 +17,20 @@ export function SiteNav() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-20 border-b border-white/5 bg-[#07090d]/80 backdrop-blur">
+    <header className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur">
+      <div className="bg-brand text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90">
+        <div className="mx-auto max-w-6xl px-5 py-1.5">
+          All Industrial Automation · outcome-based capability marketplace
+        </div>
+      </div>
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-5 py-4">
         <Link href="/" className="flex items-center gap-3">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-amber-500 text-sm font-bold text-black">
-            CX
-          </span>
-          <span className="text-sm font-semibold tracking-wide text-slate-100">
-            Capability Exchange
-            <span className="ml-2 rounded border border-amber-500/40 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-amber-400">
+          <Logo />
+          <span className="flex items-baseline gap-2">
+            <span className="text-xl font-extrabold tracking-tight text-brand">
+              Cap<span className="text-accent">X</span>
+            </span>
+            <span className="rounded border border-accent/40 bg-accent-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
               prototype
             </span>
           </span>
@@ -36,8 +42,10 @@ export function SiteNav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-md px-3 py-1.5 transition ${
-                  active ? "bg-white/10 text-white" : "text-slate-400 hover:bg-white/5 hover:text-slate-100"
+                className={`rounded-md px-3 py-1.5 font-semibold transition ${
+                  active
+                    ? "bg-brand-50 text-brand"
+                    : "text-muted hover:bg-brand-50 hover:text-brand"
                 }`}
               >
                 {link.label}

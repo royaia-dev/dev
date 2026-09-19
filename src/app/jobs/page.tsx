@@ -20,7 +20,7 @@ export default function JobsPage() {
           <button
             type="button"
             onClick={reset}
-            className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-slate-400 transition hover:border-rose-500/50 hover:text-rose-300"
+            className="rounded-lg border border-line px-3 py-1.5 text-xs text-muted transition hover:border-rose-400 hover:text-rose-700"
           >
             Clear demo data
           </button>
@@ -29,9 +29,9 @@ export default function JobsPage() {
 
       {!ready ? null : jobs.length === 0 ? (
         <Card>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-muted">
             No jobs yet.{" "}
-            <Link href="/post" className="text-amber-400 hover:underline">
+            <Link href="/post" className="text-accent hover:underline">
               Post work to the exchange
             </Link>{" "}
             to see matching, offers, escrow and evidence run end to end.
@@ -43,12 +43,12 @@ export default function JobsPage() {
             const accepted = job.offers.find((o) => o.id === job.acceptedOfferId);
             return (
               <Link key={job.id} href={`/jobs/${job.id}`} className="block">
-                <Card className="transition hover:border-amber-500/40">
+                <Card className="transition hover:border-accent">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <div className="text-sm font-semibold text-slate-100">{job.title}</div>
-                      <p className="mt-1 max-w-2xl truncate text-sm text-slate-400">{job.request}</p>
-                      <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-500">
+                      <div className="text-sm font-semibold text-ink">{job.title}</div>
+                      <p className="mt-1 max-w-2xl truncate text-sm text-muted">{job.request}</p>
+                      <div className="mt-2 flex flex-wrap gap-2 text-xs text-muted">
                         <span>{job.site}</span>
                         <span>·</span>
                         <span>{job.offers.length} offers</span>
@@ -58,7 +58,7 @@ export default function JobsPage() {
                     </div>
                     <div className="text-right">
                       <Badge tone={STATUS_TONE[job.status]}>{STATUS_LABEL[job.status]}</Badge>
-                      <div className="mt-2 text-sm text-slate-300">
+                      <div className="mt-2 text-sm text-muted">
                         {accepted
                           ? money(accepted.price)
                           : job.offers.length

@@ -56,9 +56,9 @@ export default function JobDetailPage() {
   if (!job) {
     return (
       <Card>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-muted">
           Job not found.{" "}
-          <Link href="/jobs" className="text-amber-400 hover:underline">
+          <Link href="/jobs" className="text-accent hover:underline">
             Back to the order book
           </Link>
           .
@@ -144,13 +144,13 @@ export default function JobDetailPage() {
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/jobs" className="text-xs text-slate-500 hover:text-slate-300">
+        <Link href="/jobs" className="text-xs text-muted hover:text-ink">
           ← Order book
         </Link>
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-50">{job.title}</h1>
-            <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-slate-400">{job.request}</p>
+            <h1 className="text-2xl font-semibold text-ink">{job.title}</h1>
+            <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-muted">{job.request}</p>
           </div>
           <Badge tone={STATUS_TONE[job.status]}>{STATUS_LABEL[job.status]}</Badge>
         </div>
@@ -170,7 +170,7 @@ export default function JobDetailPage() {
       <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
         <div className="space-y-6">
           <Card>
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted">
               Structured requirements
             </div>
             <div className="mt-3 space-y-2">
@@ -179,13 +179,13 @@ export default function JobDetailPage() {
                 return (
                   <div
                     key={requirement.capabilityId}
-                    className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-white/10 bg-black/20 px-3 py-2"
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-line bg-canvas px-3 py-2"
                   >
                     <div>
-                      <code className="text-xs text-amber-300">{capability.id}</code>
-                      <div className="text-sm text-slate-200">{capability.name}</div>
+                      <code className="text-xs text-accent">{capability.id}</code>
+                      <div className="text-sm text-ink">{capability.name}</div>
                     </div>
-                    <div className="text-sm text-slate-400">
+                    <div className="text-sm text-muted">
                       {requirement.quantity.toLocaleString()} {UNIT_LABEL_PLURAL[capability.unit]}
                     </div>
                   </div>
@@ -205,10 +205,10 @@ export default function JobDetailPage() {
 
           <Card>
             <div className="flex items-center justify-between">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted">
                 Offers ({job.offers.length})
               </div>
-              <div className="text-xs text-slate-500">ranked by coverage, reputation, price, ETA, autonomy</div>
+              <div className="text-xs text-muted">ranked by coverage, reputation, price, ETA, autonomy</div>
             </div>
 
             <div className="mt-3 space-y-3">
@@ -220,15 +220,15 @@ export default function JobDetailPage() {
                   <div
                     key={offer.id}
                     className={`rounded-lg border p-4 transition ${
-                      isAccepted ? "border-emerald-500/40 bg-emerald-500/5" : "border-white/10 bg-black/20"
+                      isAccepted ? "border-emerald-600/30 bg-emerald-50" : "border-line bg-canvas"
                     } ${dimmed ? "opacity-45" : ""}`}
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
-                        <Link href={`/providers/${provider.id}`} className="text-sm font-semibold text-slate-100 hover:text-amber-300">
+                        <Link href={`/providers/${provider.id}`} className="text-sm font-semibold text-ink hover:text-accent">
                           {provider.name}
                         </Link>
-                        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                        <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
                           <Badge>{PROVIDER_KIND_LABEL[provider.kind]}</Badge>
                           <Badge tone={offer.autonomy === "autonomous" ? "green" : "neutral"}>
                             {AUTONOMY_LABEL[offer.autonomy]}
@@ -237,21 +237,21 @@ export default function JobDetailPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-lg font-semibold text-slate-50">{money(offer.price)}</div>
-                        <div className="text-xs text-slate-500">
+                        <div className="text-lg font-semibold text-ink">{money(offer.price)}</div>
+                        <div className="text-xs text-muted">
                           ETA {offer.etaHours} h · {offer.hours} h on site · {offer.distanceKm} km
                         </div>
                       </div>
                     </div>
 
-                    <ul className="mt-3 space-y-1 text-xs text-slate-400">
+                    <ul className="mt-3 space-y-1 text-xs text-muted">
                       {offer.rationale.map((line) => (
                         <li key={line}>· {line}</li>
                       ))}
                     </ul>
 
                     <div className="mt-3 flex items-center justify-between gap-3">
-                      <div className="text-xs text-slate-500">match score {offer.score.toFixed(3)}</div>
+                      <div className="text-xs text-muted">match score {offer.score.toFixed(3)}</div>
                       {job.acceptedOfferId ? (
                         isAccepted ? (
                           <Badge tone="green">Awarded</Badge>
@@ -260,7 +260,7 @@ export default function JobDetailPage() {
                         <button
                           type="button"
                           onClick={() => award(offer.id)}
-                          className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-black transition hover:bg-amber-400"
+                          className="rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-brand"
                         >
                           Accept offer · hold {money(withFee(offer.price))} in escrow
                         </button>
@@ -271,7 +271,7 @@ export default function JobDetailPage() {
               })}
 
               {job.offers.length === 0 ? (
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-muted">
                   No provider currently covers these capabilities within the deadline and service radius. In
                   production this becomes a supply gap signal for provider recruitment.
                 </p>
@@ -281,15 +281,15 @@ export default function JobDetailPage() {
 
           {job.evidence.length > 0 ? (
             <Card>
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Evidence of work</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted">Evidence of work</div>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 {job.evidence.map((item) => (
-                  <div key={item.label} className="rounded-lg border border-white/10 bg-black/20 p-3">
+                  <div key={item.label} className="rounded-lg border border-line bg-canvas p-3">
                     <div className="flex items-center gap-2">
                       <Badge tone="violet">{item.kind}</Badge>
-                      <span className="text-sm text-slate-200">{item.label}</span>
+                      <span className="text-sm text-ink">{item.label}</span>
                     </div>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400">{item.detail}</p>
+                    <p className="mt-1.5 text-xs leading-relaxed text-muted">{item.detail}</p>
                   </div>
                 ))}
               </div>
@@ -299,18 +299,18 @@ export default function JobDetailPage() {
 
         <div className="space-y-6">
           <Card>
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Next action</div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted">Next action</div>
             <div className="mt-3 space-y-3">
               {job.status === "offers" ? (
-                <p className="text-sm text-slate-400">Acting as the customer: accept one of the offers.</p>
+                <p className="text-sm text-muted">Acting as the customer: accept one of the offers.</p>
               ) : null}
               {job.status === "awarded" ? (
                 <>
-                  <p className="text-sm text-slate-400">Acting as the provider: mobilise the asset.</p>
+                  <p className="text-sm text-muted">Acting as the provider: mobilise the asset.</p>
                   <button
                     type="button"
                     onClick={startWork}
-                    className="w-full rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-sky-400"
+                    className="w-full rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700"
                   >
                     Start work
                   </button>
@@ -318,13 +318,13 @@ export default function JobDetailPage() {
               ) : null}
               {job.status === "in_progress" ? (
                 <>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-muted">
                     Acting as the provider: submit telemetry-backed completion evidence.
                   </p>
                   <button
                     type="button"
                     onClick={submitEvidence}
-                    className="w-full rounded-lg bg-violet-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-violet-400"
+                    className="w-full rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
                   >
                     Submit completion evidence
                   </button>
@@ -332,25 +332,25 @@ export default function JobDetailPage() {
               ) : null}
               {job.status === "evidence_submitted" ? (
                 <>
-                  <p className="text-sm text-slate-400">Acting as the customer: review evidence and settle.</p>
+                  <p className="text-sm text-muted">Acting as the customer: review evidence and settle.</p>
                   <button
                     type="button"
                     onClick={releasePayment}
-                    className="w-full rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-emerald-400"
+                    className="w-full rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
                   >
                     Accept and release payment
                   </button>
                 </>
               ) : null}
               {job.status === "completed" && accepted ? (
-                <div className="space-y-2 text-sm text-slate-300">
+                <div className="space-y-2 text-sm text-muted">
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Provider paid</span>
+                    <span className="text-muted">Provider paid</span>
                     <span>{money(accepted.price)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">Platform revenue</span>
-                    <span className="text-amber-300">{money(feeOn(accepted.price))}</span>
+                    <span className="text-muted">Platform revenue</span>
+                    <span className="text-accent">{money(feeOn(accepted.price))}</span>
                   </div>
                 </div>
               ) : null}
@@ -358,14 +358,14 @@ export default function JobDetailPage() {
           </Card>
 
           <Card>
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Transaction timeline</div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted">Transaction timeline</div>
             <ol className="mt-3 space-y-3">
               {job.timeline.map((entry, index) => (
                 <li key={`${entry.at}-${index}`} className="flex gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                   <div>
-                    <div className="text-sm leading-snug text-slate-300">{entry.message}</div>
-                    <div className="text-[11px] uppercase tracking-wider text-slate-600">
+                    <div className="text-sm leading-snug text-muted">{entry.message}</div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted">
                       {entry.actor} · {entry.at}
                     </div>
                   </div>
