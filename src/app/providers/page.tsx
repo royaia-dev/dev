@@ -14,11 +14,11 @@ export default function ProvidersPage() {
       <div className="grid gap-4 md:grid-cols-2">
         {PROVIDERS.map((provider) => (
           <Link key={provider.id} href={`/providers/${provider.id}`}>
-            <Card className="h-full transition hover:border-amber-500/40">
+            <Card className="h-full transition hover:border-accent">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-sm font-semibold text-slate-100">{provider.name}</div>
-                  <div className="mt-1 text-xs text-slate-500">
+                  <div className="text-sm font-semibold text-ink">{provider.name}</div>
+                  <div className="mt-1 text-xs text-muted">
                     {provider.base} · {provider.radiusKm} km radius
                   </div>
                 </div>
@@ -31,7 +31,7 @@ export default function ProvidersPage() {
                 <Badge tone="amber">{provider.reputation.rating.toFixed(1)} ★</Badge>
               </div>
 
-              <div className="mt-3 text-xs text-slate-500">
+              <div className="mt-3 text-xs text-muted">
                 {provider.profiles.length} capability profiles · {provider.reputation.jobs.toLocaleString()} jobs
                 delivered
               </div>
