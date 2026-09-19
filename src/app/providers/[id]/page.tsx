@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge, Card, Stat, rate } from "@/components/ui";
-import { AUTONOMY_LABEL, CAPABILITY_BY_ID, UNIT_LABEL } from "@/lib/capabilities";
+import { AUTONOMY_LABEL, CAPABILITY_BY_ID, UNIT_LABEL, UNIT_LABEL_PLURAL } from "@/lib/capabilities";
 import { PROVIDERS, PROVIDER_BY_ID, PROVIDER_KIND_LABEL } from "@/lib/providers";
 
 export function generateStaticParams() {
@@ -58,7 +58,7 @@ export default async function ProviderPage({ params }: { params: Promise<{ id: s
                     {AUTONOMY_LABEL[profile.autonomy]}
                   </Badge>
                   <span>
-                    {profile.throughput.toLocaleString()} {UNIT_LABEL[capability.unit]}s/h
+                    {profile.throughput.toLocaleString()} {UNIT_LABEL_PLURAL[capability.unit]}/h
                   </span>
                   <span className="text-slate-200">
                     {rate(profile.rate)} / {UNIT_LABEL[capability.unit]}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge, Card, SectionTitle, rate } from "@/components/ui";
-import { AUTONOMY_LABEL, CAPABILITIES, UNIT_LABEL } from "@/lib/capabilities";
+import { AUTONOMY_LABEL, CAPABILITIES, UNIT_LABEL, UNIT_LABEL_PLURAL } from "@/lib/capabilities";
 import { PROVIDERS } from "@/lib/providers";
 
 export default function RegistryPage() {
@@ -66,7 +66,7 @@ export default function RegistryPage() {
                             </Badge>
                           </td>
                           <td className="py-2 text-slate-400">
-                            {profile.throughput.toLocaleString()} {UNIT_LABEL[capability.unit]}s/h
+                            {profile.throughput.toLocaleString()} {UNIT_LABEL_PLURAL[capability.unit]}/h
                           </td>
                           <td className="py-2 text-slate-400">{provider.radiusKm} km</td>
                           <td className="py-2 text-right">
