@@ -134,6 +134,15 @@ export const UNIT_LABEL: Record<CapabilityUnit, string> = {
   patrol: "patrol",
 };
 
+export const UNIT_LABEL_PLURAL: Record<CapabilityUnit, string> = {
+  hour: "hours",
+  panel: "panels",
+  movement: "movements",
+  sqm: "m²",
+  asset: "assets",
+  patrol: "patrols",
+};
+
 export const AUTONOMY_LABEL: Record<AutonomyLevel, string> = {
   autonomous: "Fully autonomous",
   supervised: "Remote supervised",

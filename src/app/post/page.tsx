@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Badge, Card, SectionTitle, money } from "@/components/ui";
-import { CAPABILITY_BY_ID, UNIT_LABEL } from "@/lib/capabilities";
+import { CAPABILITY_BY_ID, UNIT_LABEL_PLURAL } from "@/lib/capabilities";
 import { SITES } from "@/lib/geo";
 import { buildOffers, parseRequest, type Requirement } from "@/lib/matching";
 import { nowLabel, useStore, type Job } from "@/lib/store";
@@ -261,7 +261,7 @@ export default function PostWorkPage() {
                         onChange={(event) => updateQuantity(requirement.capabilityId, Number(event.target.value))}
                         className="w-24 rounded border border-white/10 bg-black/40 px-2 py-1 text-slate-100 outline-none focus:border-amber-500/60"
                       />
-                      <span>{UNIT_LABEL[capability.unit]}s</span>
+                      <span>{UNIT_LABEL_PLURAL[capability.unit]}</span>
                       <Badge tone="blue">{Math.round(requirement.confidence * 100)}% confidence</Badge>
                       <span className="text-slate-600">matched: {requirement.matchedTerms.join(", ")}</span>
                     </div>

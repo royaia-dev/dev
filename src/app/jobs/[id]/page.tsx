@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Badge, Card, Stat, money } from "@/components/ui";
 import { STATUS_LABEL, STATUS_TONE } from "@/components/jobStatus";
-import { AUTONOMY_LABEL, CAPABILITY_BY_ID, UNIT_LABEL } from "@/lib/capabilities";
+import { AUTONOMY_LABEL, CAPABILITY_BY_ID, UNIT_LABEL_PLURAL } from "@/lib/capabilities";
 import { PROVIDER_BY_ID, PROVIDER_KIND_LABEL } from "@/lib/providers";
 import { nowLabel, useStore, type EvidenceItem, type Job } from "@/lib/store";
 
@@ -33,13 +33,13 @@ function evidenceFor(job: Job): EvidenceItem[] {
       items.push({
         kind: "report",
         label: `${capability.name} report`,
-        detail: `${requirement.quantity.toLocaleString()} ${UNIT_LABEL[capability.unit]}s assessed; defect list and imagery attached`,
+        detail: `${requirement.quantity.toLocaleString()} ${UNIT_LABEL_PLURAL[capability.unit]} assessed; defect list and imagery attached`,
       });
     } else {
       items.push({
         kind: "photo",
         label: `${capability.name} before/after capture`,
-        detail: `${requirement.quantity.toLocaleString()} ${UNIT_LABEL[capability.unit]}s completed; timestamped imagery attached`,
+        detail: `${requirement.quantity.toLocaleString()} ${UNIT_LABEL_PLURAL[capability.unit]} completed; timestamped imagery attached`,
       });
     }
   }
@@ -186,7 +186,7 @@ export default function JobDetailPage() {
                       <div className="text-sm text-slate-200">{capability.name}</div>
                     </div>
                     <div className="text-sm text-slate-400">
-                      {requirement.quantity.toLocaleString()} {UNIT_LABEL[capability.unit]}s
+                      {requirement.quantity.toLocaleString()} {UNIT_LABEL_PLURAL[capability.unit]}
                     </div>
                   </div>
                 );
