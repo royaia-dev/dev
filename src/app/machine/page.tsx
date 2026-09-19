@@ -178,7 +178,7 @@ export default function MachineExchangePage() {
                   key={bid.id}
                   className={`rounded-lg border p-3 ${
                     awarded ? "border-emerald-600/30 bg-emerald-50" : "border-line bg-canvas"
-                  } ${rejected ? "opacity-45" : ""}`}
+                  } ${rejected ? "opacity-80 grayscale" : ""}`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>

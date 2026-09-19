@@ -221,7 +221,7 @@ export default function JobDetailPage() {
                     key={offer.id}
                     className={`rounded-lg border p-4 transition ${
                       isAccepted ? "border-emerald-600/30 bg-emerald-50" : "border-line bg-canvas"
-                    } ${dimmed ? "opacity-45" : ""}`}
+                    } ${dimmed ? "opacity-80 grayscale" : ""}`}
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
