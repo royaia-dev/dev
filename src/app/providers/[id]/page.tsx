@@ -18,13 +18,13 @@ export default async function ProviderPage({ params }: { params: Promise<{ id: s
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/providers" className="text-xs text-slate-500 hover:text-slate-300">
+        <Link href="/providers" className="text-xs text-muted hover:text-ink">
           ← Providers
         </Link>
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-50">{provider.name}</h1>
-            <p className="mt-1.5 text-sm text-slate-400">
+            <h1 className="text-2xl font-semibold text-ink">{provider.name}</h1>
+            <p className="mt-1.5 text-sm text-muted">
               {PROVIDER_KIND_LABEL[provider.kind]} · {provider.base} · {provider.availability}
             </p>
           </div>
@@ -40,27 +40,27 @@ export default async function ProviderPage({ params }: { params: Promise<{ id: s
       </div>
 
       <Card>
-        <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Capability profiles</div>
+        <div className="text-xs font-semibold uppercase tracking-wider text-muted">Capability profiles</div>
         <div className="mt-3 space-y-2">
           {provider.profiles.map((profile) => {
             const capability = CAPABILITY_BY_ID[profile.capabilityId];
             return (
               <div
                 key={profile.capabilityId}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-white/10 bg-black/20 px-3 py-2.5"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-line bg-canvas px-3 py-2.5"
               >
                 <div>
-                  <code className="text-xs text-amber-300">{capability.id}</code>
-                  <div className="text-sm text-slate-200">{capability.name}</div>
+                  <code className="text-xs text-accent">{capability.id}</code>
+                  <div className="text-sm text-ink">{capability.name}</div>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
                   <Badge tone={profile.autonomy === "autonomous" ? "green" : "neutral"}>
                     {AUTONOMY_LABEL[profile.autonomy]}
                   </Badge>
                   <span>
                     {profile.throughput.toLocaleString()} {UNIT_LABEL_PLURAL[capability.unit]}/h
                   </span>
-                  <span className="text-slate-200">
+                  <span className="text-ink">
                     {rate(profile.rate)} / {UNIT_LABEL[capability.unit]}
                   </span>
                   <span>call-out {rate(profile.callOut)}</span>
@@ -73,15 +73,15 @@ export default async function ProviderPage({ params }: { params: Promise<{ id: s
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
-          <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Fleet</div>
-          <ul className="mt-3 space-y-1.5 text-sm text-slate-300">
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted">Fleet</div>
+          <ul className="mt-3 space-y-1.5 text-sm text-muted">
             {provider.fleet.map((item) => (
               <li key={item}>· {item}</li>
             ))}
           </ul>
         </Card>
         <Card>
-          <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted">
             Certifications and compliance
           </div>
           <div className="mt-3 flex flex-wrap gap-2">

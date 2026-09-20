@@ -24,13 +24,13 @@ export default function RegistryPage() {
             <Card key={capability.id}>
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <code className="text-sm text-amber-300">{capability.id}</code>
-                  <div className="mt-1 text-sm font-semibold text-slate-100">{capability.name}</div>
-                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-slate-400">
+                  <code className="text-sm text-accent">{capability.id}</code>
+                  <div className="mt-1 text-sm font-semibold text-ink">{capability.name}</div>
+                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-muted">
                     {capability.description}
                   </p>
                 </div>
-                <div className="text-right text-xs text-slate-500">
+                <div className="text-right text-xs text-muted">
                   <div>
                     indicative {rate(capability.indicativeRate)} / {UNIT_LABEL[capability.unit]}
                   </div>
@@ -44,7 +44,7 @@ export default function RegistryPage() {
                 <div className="mt-4 overflow-x-auto">
                   <table className="w-full min-w-[640px] text-left text-sm">
                     <thead>
-                      <tr className="text-[11px] uppercase tracking-wider text-slate-500">
+                      <tr className="text-[11px] uppercase tracking-wider text-muted">
                         <th className="pb-2 font-medium">Provider</th>
                         <th className="pb-2 font-medium">Autonomy</th>
                         <th className="pb-2 font-medium">Throughput</th>
@@ -52,23 +52,23 @@ export default function RegistryPage() {
                         <th className="pb-2 text-right font-medium">Rate</th>
                       </tr>
                     </thead>
-                    <tbody className="text-slate-300">
+                    <tbody className="text-muted">
                       {supply.map(({ provider, profile }) => (
-                        <tr key={provider.id} className="border-t border-white/5">
+                        <tr key={provider.id} className="border-t border-line">
                           <td className="py-2">
-                            <Link href={`/providers/${provider.id}`} className="hover:text-amber-300">
+                            <Link href={`/providers/${provider.id}`} className="hover:text-accent">
                               {provider.name}
                             </Link>
                           </td>
-                          <td className="py-2 text-slate-400">
+                          <td className="py-2 text-muted">
                             <Badge tone={profile.autonomy === "autonomous" ? "green" : "neutral"}>
                               {AUTONOMY_LABEL[profile.autonomy]}
                             </Badge>
                           </td>
-                          <td className="py-2 text-slate-400">
+                          <td className="py-2 text-muted">
                             {profile.throughput.toLocaleString()} {UNIT_LABEL_PLURAL[capability.unit]}/h
                           </td>
-                          <td className="py-2 text-slate-400">{provider.radiusKm} km</td>
+                          <td className="py-2 text-muted">{provider.radiusKm} km</td>
                           <td className="py-2 text-right">
                             {rate(profile.rate)} / {UNIT_LABEL[capability.unit]}
                           </td>

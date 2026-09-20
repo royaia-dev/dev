@@ -2,7 +2,9 @@ import type { ReactNode } from "react";
 
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`rounded-xl border border-white/10 bg-white/[0.03] p-5 ${className}`}>{children}</div>
+    <div className={`rounded-xl border border-line bg-white p-5 shadow-[0_1px_2px_rgba(15,29,43,0.05)] ${className}`}>
+      {children}
+    </div>
   );
 }
 
@@ -10,20 +12,20 @@ export function SectionTitle({ eyebrow, title, lead }: { eyebrow?: string; title
   return (
     <div className="mb-5">
       {eyebrow ? (
-        <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-400">{eyebrow}</div>
+        <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">{eyebrow}</div>
       ) : null}
-      <h2 className="text-xl font-semibold text-slate-50">{title}</h2>
-      {lead ? <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-slate-400">{lead}</p> : null}
+      <h2 className="text-xl font-bold tracking-tight text-brand">{title}</h2>
+      {lead ? <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-muted">{lead}</p> : null}
     </div>
   );
 }
 
 const TONES = {
-  neutral: "border-white/15 text-slate-300",
-  amber: "border-amber-500/40 bg-amber-500/10 text-amber-300",
-  green: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
-  blue: "border-sky-500/40 bg-sky-500/10 text-sky-300",
-  violet: "border-violet-500/40 bg-violet-500/10 text-violet-300",
+  neutral: "border-line bg-canvas text-muted",
+  amber: "border-accent/40 bg-accent-50 text-accent",
+  green: "border-emerald-600/30 bg-emerald-50 text-emerald-700",
+  blue: "border-brand/25 bg-brand-50 text-brand",
+  violet: "border-violet-600/30 bg-violet-50 text-violet-700",
 } as const;
 
 export function Badge({
@@ -42,10 +44,10 @@ export function Badge({
 
 export function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-[11px] uppercase tracking-wider text-slate-500">{label}</div>
-      <div className="mt-1 text-lg font-semibold text-slate-100">{value}</div>
-      {hint ? <div className="text-xs text-slate-500">{hint}</div> : null}
+    <div className="rounded-lg border border-line bg-canvas px-4 py-3">
+      <div className="text-[11px] font-semibold uppercase tracking-wider text-muted">{label}</div>
+      <div className="mt-1 text-lg font-bold text-brand">{value}</div>
+      {hint ? <div className="text-xs text-muted">{hint}</div> : null}
     </div>
   );
 }

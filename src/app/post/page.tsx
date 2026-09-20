@@ -142,7 +142,7 @@ export default function PostWorkPage() {
             key={example.label}
             type="button"
             onClick={() => applyExample(example)}
-            className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-slate-300 transition hover:border-amber-500/50 hover:text-amber-300"
+            className="rounded-full border border-line px-3 py-1.5 text-xs text-muted transition hover:border-accent hover:text-accent"
           >
             {example.label}
           </button>
@@ -151,7 +151,7 @@ export default function PostWorkPage() {
 
       <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <Card>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-muted">
             What needs to be accomplished
           </label>
           <textarea
@@ -162,17 +162,17 @@ export default function PostWorkPage() {
               setRequirements([]);
             }}
             rows={5}
-            className="mt-2 w-full resize-none rounded-lg border border-white/10 bg-black/30 p-3 text-sm text-slate-100 outline-none focus:border-amber-500/60"
+            className="mt-2 w-full resize-none rounded-lg border border-line bg-canvas p-3 text-sm text-ink outline-none focus:border-brand"
             placeholder="e.g. Inspect 1,800 solar panels on our warehouse roof and report damaged modules"
           />
 
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">Site</label>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-muted">Site</label>
               <select
                 value={site}
                 onChange={(event) => setSite(event.target.value)}
-                className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-slate-100 outline-none focus:border-amber-500/60"
+                className="mt-2 w-full rounded-lg border border-line bg-canvas px-3 py-2 text-sm text-ink outline-none focus:border-brand"
               >
                 {SITES.map((s) => (
                   <option key={s.name} value={s.name}>
@@ -182,11 +182,11 @@ export default function PostWorkPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">Deadline</label>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-muted">Deadline</label>
               <select
                 value={deadlineHours}
                 onChange={(event) => setDeadlineHours(Number(event.target.value))}
-                className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-slate-100 outline-none focus:border-amber-500/60"
+                className="mt-2 w-full rounded-lg border border-line bg-canvas px-3 py-2 text-sm text-ink outline-none focus:border-brand"
               >
                 {DEADLINES.map((d) => (
                   <option key={d.hours} value={d.hours}>
@@ -196,14 +196,14 @@ export default function PostWorkPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-muted">
                 Budget (optional)
               </label>
               <input
                 value={budget}
                 onChange={(event) => setBudget(event.target.value.replace(/[^\d]/g, ""))}
                 inputMode="numeric"
-                className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-slate-100 outline-none focus:border-amber-500/60"
+                className="mt-2 w-full rounded-lg border border-line bg-canvas px-3 py-2 text-sm text-ink outline-none focus:border-brand"
                 placeholder="AUD"
               />
             </div>
@@ -213,25 +213,25 @@ export default function PostWorkPage() {
             type="button"
             onClick={runParse}
             disabled={parsing || request.trim().length < 10}
-            className="mt-5 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-5 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand disabled:cursor-not-allowed disabled:opacity-40"
           >
             {parsing ? "Structuring request…" : "Structure request"}
           </button>
         </Card>
 
         <Card>
-          <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted">
             Structured capability requirements
           </div>
 
           {!parsed ? (
-            <p className="mt-3 text-sm leading-relaxed text-slate-500">
+            <p className="mt-3 text-sm leading-relaxed text-muted">
               The intake layer converts free text into capability identifiers, quantities and compliance
               constraints. Everything downstream — matching, pricing, evidence — is driven by this structure,
               not by the wording of the request.
             </p>
           ) : requirements.length === 0 ? (
-            <p className="mt-3 text-sm text-rose-300">
+            <p className="mt-3 text-sm text-rose-600">
               No capability in the registry matched this request. In production this would route to manual
               triage and become a candidate for a new capability definition.
             </p>
@@ -240,30 +240,30 @@ export default function PostWorkPage() {
               {requirements.map((requirement) => {
                 const capability = CAPABILITY_BY_ID[requirement.capabilityId];
                 return (
-                  <div key={requirement.capabilityId} className="rounded-lg border border-white/10 bg-black/20 p-3">
+                  <div key={requirement.capabilityId} className="rounded-lg border border-line bg-canvas p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <code className="text-xs text-amber-300">{capability.id}</code>
-                        <div className="text-sm text-slate-200">{capability.name}</div>
+                        <code className="text-xs text-accent">{capability.id}</code>
+                        <div className="text-sm text-ink">{capability.name}</div>
                       </div>
                       <button
                         type="button"
                         onClick={() => removeRequirement(requirement.capabilityId)}
-                        className="text-xs text-slate-500 hover:text-rose-300"
+                        className="text-xs text-muted hover:text-rose-700"
                       >
                         remove
                       </button>
                     </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted">
                       <input
                         type="number"
                         value={requirement.quantity}
                         onChange={(event) => updateQuantity(requirement.capabilityId, Number(event.target.value))}
-                        className="w-24 rounded border border-white/10 bg-black/40 px-2 py-1 text-slate-100 outline-none focus:border-amber-500/60"
+                        className="w-24 rounded border border-line bg-canvas px-2 py-1 text-ink outline-none focus:border-brand"
                       />
                       <span>{UNIT_LABEL_PLURAL[capability.unit]}</span>
                       <Badge tone="blue">{Math.round(requirement.confidence * 100)}% confidence</Badge>
-                      <span className="text-slate-600">matched: {requirement.matchedTerms.join(", ")}</span>
+                      <span className="text-muted">matched: {requirement.matchedTerms.join(", ")}</span>
                     </div>
                   </div>
                 );
@@ -279,7 +279,7 @@ export default function PostWorkPage() {
                 </div>
               ) : null}
 
-              <div className="rounded-lg border border-white/10 bg-black/20 p-3 text-xs text-slate-400">
+              <div className="rounded-lg border border-line bg-canvas p-3 text-xs text-muted">
                 {previewOffers.length} provider{previewOffers.length === 1 ? "" : "s"} can serve this within the
                 deadline and service radius
                 {previewOffers.length > 0
@@ -291,7 +291,7 @@ export default function PostWorkPage() {
               <button
                 type="button"
                 onClick={publish}
-                className="w-full rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-amber-400"
+                className="w-full rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand"
               >
                 Publish to the exchange
               </button>

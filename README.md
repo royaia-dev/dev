@@ -1,7 +1,7 @@
-# Capability Exchange — concept prototype
+# CapX — Capability Exchange concept prototype
 
-A clickable prototype of the Robotic Capability Exchange concept proposed for All Industrial Automation:
-an outcome-based marketplace where a customer describes the result they need and the exchange matches the
+A clickable prototype of the CapX (Robotic Capability Exchange) concept proposed for All Industrial Automation:
+an outcome-based marketplace where a customer describes the result they need and CapX matches the
 best combination of robots, equipment, contractors and human operators to deliver it.
 
 All data is simulated and held in the browser (`localStorage`). There is no backend, no payment processor
